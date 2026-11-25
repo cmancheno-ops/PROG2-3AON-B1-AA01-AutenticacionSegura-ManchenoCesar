@@ -113,3 +113,23 @@ SELECT CONVERT(NVARCHAR(450), NEWID()), v.Name, UPPER(v.Name), CONVERT(NVARCHAR(
 FROM (VALUES (N'Cliente'), (N'Administrador')) AS v(Name)
 WHERE NOT EXISTS (SELECT 1 FROM dbo.AspNetRoles r WHERE r.NormalizedName = UPPER(v.Name));
 GO
+
+/* ---------------------------------------------------------------------
+   Registro de la migración de EF Core (OPCIONAL pero recomendado)
+   El repositorio incluye la migración 20261125152835_InitialCreate y la
+   aplicación llama a Database.Migrate() al arrancar. Si el esquema se creó
+   con ESTE script, hay que registrar la migración como ya aplicada; de lo
+   contrario EF intentaría crear de nuevo las tablas y fallaría.
+   Si usted creó la base con migraciones (dotnet ef database update o
+   arrancando la app), NO ejecute este bloque.
+   --------------------------------------------------------------------- */
+IF OBJECT_ID(N'dbo.__EFMigrationsHistory') IS NULL
+    CREATE TABLE dbo.__EFMigrationsHistory (
+        MigrationId    NVARCHAR(150) NOT NULL CONSTRAINT PK___EFMigrationsHistory PRIMARY KEY,
+        ProductVersion NVARCHAR(32)  NOT NULL
+    );
+GO
+IF NOT EXISTS (SELECT 1 FROM dbo.__EFMigrationsHistory WHERE MigrationId = N'20261125152835_InitialCreate')
+    INSERT INTO dbo.__EFMigrationsHistory (MigrationId, ProductVersion)
+    VALUES (N'20261125152835_InitialCreate', N'8.0.11');
+GO

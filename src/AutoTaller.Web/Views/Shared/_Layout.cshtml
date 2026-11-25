@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>@ViewData["Title"] - AutoTaller Seguro</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" />
+</head>
+<body>
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark mb-4">
+  <div class="container">
+    <a class="navbar-brand" asp-controller="Home" asp-action="Index">AutoTaller Seguro</a>
+    <ul class="navbar-nav me-auto">
+      @* Ocultar menús es solo UX: la protección real está en [Authorize] del servidor. *@
+      @if (User.Identity?.IsAuthenticated == true)
+      {
+        <li class="nav-item"><a class="nav-link" asp-controller="Personal" asp-action="Index">Área personal</a></li>
+        <li class="nav-item"><a class="nav-link" asp-controller="Profile" asp-action="Index">Mi perfil</a></li>
+        @if (User.IsInRole(AppRoles.Administrador))
+        {
+          <li class="nav-item"><a class="nav-link" asp-controller="Admin" asp-action="Users">Administrar usuarios</a></li>
+        }
+      }
+    </ul>
+    <ul class="navbar-nav">
+      @if (User.Identity?.IsAuthenticated == true)
+      {
+        <li class="nav-item d-flex align-items-center text-light me-3">@User.Identity!.Name</li>
+        <li class="nav-item">
+          <form asp-controller="Account" asp-action="Logout" method="post">
+            <button type="submit" class="btn btn-outline-light btn-sm">Cerrar sesión</button>
+          </form>
+        </li>
+      }
+      else
+      {
+        <li class="nav-item"><a class="nav-link" asp-controller="Account" asp-action="Login">Iniciar sesión</a></li>
+        <li class="nav-item"><a class="nav-link" asp-controller="Account" asp-action="Register">Registrarse</a></li>
+      }
+    </ul>
+  </div>
+</nav>
+<main class="container" style="max-width: 960px;">
+    @if (TempData["Ok"] is string ok) { <div class="alert alert-success">@ok</div> }
+    @if (TempData["Error"] is string err) { <div class="alert alert-danger">@err</div> }
+    @RenderBody()
+</main>
+<footer class="container text-muted small mt-5 mb-3">AA01 – Programación II – ITSCO · Proyecto académico con datos ficticios</footer>
+</body>
+</html>

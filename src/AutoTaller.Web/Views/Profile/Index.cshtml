@@ -1,0 +1,10 @@
+@model ProfileDto
+@{ ViewData["Title"] = "Mi perfil"; }
+<h2>Mi perfil</h2>
+<dl class="row col-md-8">
+  <dt class="col-sm-4">Nombre</dt><dd class="col-sm-8">@Model.NombreCompleto</dd>
+  <dt class="col-sm-4">Correo</dt><dd class="col-sm-8">@Model.Email</dd>
+  <dt class="col-sm-4">Rol</dt><dd class="col-sm-8">@Model.Rol</dd>
+  <dt class="col-sm-4">Registrado (UTC)</dt><dd class="col-sm-8">@Model.CreatedAtUtc.ToString("yyyy-MM-dd HH:mm")</dd>
+</dl>
+<a asp-action="ChangePassword" class="btn btn-outline-primary">Cambiar contraseña</a>

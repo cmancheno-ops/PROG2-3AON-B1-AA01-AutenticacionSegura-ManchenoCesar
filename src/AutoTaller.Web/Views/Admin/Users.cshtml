@@ -1,0 +1,40 @@
+@model IReadOnlyList<UserListItem>
+@{ ViewData["Title"] = "Usuarios"; }
+<h2>Administración de usuarios</h2>
+<table class="table table-sm align-middle">
+  <thead><tr><th>Nombre</th><th>Correo</th><th>Rol</th><th>Estado</th><th>Cambiar rol</th><th>Cuenta</th></tr></thead>
+  <tbody>
+  @foreach (var u in Model)
+  {
+    <tr>
+      <td>@u.NombreCompleto</td>
+      <td>@u.Email</td>
+      <td><span class="badge bg-@(u.Rol.Contains(AppRoles.Administrador) ? "danger" : "secondary")">@u.Rol</span></td>
+      <td>
+        @if (!u.IsActive) { <span class="badge bg-dark">Deshabilitada</span> }
+        else if (u.LockedOut) { <span class="badge bg-warning text-dark">Bloqueada temporalmente</span> }
+        else { <span class="badge bg-success">Activa</span> }
+      </td>
+      <td>
+        <form asp-action="SetRole" method="post" class="d-flex gap-1">
+          <input type="hidden" name="id" value="@u.Id" />
+          <select name="role" class="form-select form-select-sm">
+            @foreach (var r in AppRoles.All)
+            {
+              <option value="@r" selected="@(u.Rol == r)">@r</option>
+            }
+          </select>
+          <button class="btn btn-sm btn-outline-primary" type="submit">Aplicar</button>
+        </form>
+      </td>
+      <td>
+        <form asp-action="SetActive" method="post">
+          <input type="hidden" name="id" value="@u.Id" />
+          <input type="hidden" name="isActive" value="@(u.IsActive ? "false" : "true")" />
+          <button class="btn btn-sm @(u.IsActive ? "btn-outline-danger" : "btn-outline-success")" type="submit">@(u.IsActive ? "Deshabilitar" : "Habilitar")</button>
+        </form>
+      </td>
+    </tr>
+  }
+  </tbody>
+</table>

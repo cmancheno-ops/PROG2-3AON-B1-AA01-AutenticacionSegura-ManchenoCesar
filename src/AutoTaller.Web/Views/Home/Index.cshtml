@@ -1,0 +1,14 @@
+@{ ViewData["Title"] = "Inicio"; }
+<div class="p-4 bg-light rounded">
+  <h1>AutoTaller Seguro</h1>
+  <p class="lead">Módulo de identidad: registro, autenticación, recuperación de cuenta y autorización por roles (ASP.NET Core Identity + SQL Server).</p>
+  @if (User.Identity?.IsAuthenticated != true)
+  {
+    <a class="btn btn-primary" asp-controller="Account" asp-action="Login">Iniciar sesión</a>
+    <a class="btn btn-outline-secondary" asp-controller="Account" asp-action="Register">Crear cuenta</a>
+  }
+  else
+  {
+    <a class="btn btn-primary" asp-controller="Personal" asp-action="Index">Ir a mi área personal</a>
+  }
+</div>

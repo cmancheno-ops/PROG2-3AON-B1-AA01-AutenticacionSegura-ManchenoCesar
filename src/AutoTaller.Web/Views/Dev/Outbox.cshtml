@@ -1,0 +1,10 @@
+@model List<AutoTaller.Web.Services.SimulatedEmail>
+@{ ViewData["Title"] = "Correo simulado"; }
+<div class="alert alert-warning">Bandeja SIMULADA (solo Development). No se envía ningún correo real.</div>
+<h2>Correos simulados</h2>
+@if (Model.Count == 0) { <p>No hay mensajes todavía.</p> }
+@foreach (var m in Model)
+{
+  <div class="card mb-3"><div class="card-header">@m.AtUtc.ToString("HH:mm:ss") UTC · Para: @m.To · <strong>@m.Subject</strong></div>
+  <div class="card-body">@Html.Raw(m.HtmlBody)</div></div>
+}

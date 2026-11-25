@@ -1,0 +1,4 @@
+@{ ViewData["Title"] = "Área personal"; }
+<h2>Área personal</h2>
+<p>Bienvenido, <strong>@User.Identity!.Name</strong>. Esta página exige sesión iniciada (<code>[Authorize]</code>).</p>
+<p>Rol actual: <span class="badge bg-secondary">@(User.IsInRole(AppRoles.Administrador) ? AppRoles.Administrador : AppRoles.Cliente)</span></p>

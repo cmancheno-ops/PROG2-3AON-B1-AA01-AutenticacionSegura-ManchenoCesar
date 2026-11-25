@@ -8,3 +8,5 @@ appsettings.Local.json
 secrets.json
 .env
 *.log
+
+*.zip

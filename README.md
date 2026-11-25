@@ -119,7 +119,7 @@ El registro público **nunca** asigna el rol Administrador. Los usuarios que se 
 
 ```
 database/   script del esquema y consultas de verificación
-docs/       matriz de pruebas y declaración de uso de IA
+docs/      declaración de uso de IA
 src/        AutoTaller.Data · AutoTaller.Business · AutoTaller.Web
 ```
 
